@@ -11,7 +11,6 @@ This is one of the Product Page of Daraz. Our code will scrap customer review fr
 Here are some review by customers. Our code will scrape this type of review and save those in a csv file.
 
 **So how to run it.**
- 
-  1.Python 3.6 or higher installed.
-  2.Install the dependency using pip install -r requirement.txt
-  3.Now download the code and run
+1.Python 3.6 or higher installed.
+2.Install the dependency using pip install -r requirement.txt
+3.Now download the code and run
