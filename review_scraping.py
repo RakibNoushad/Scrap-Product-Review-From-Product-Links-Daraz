@@ -4,12 +4,9 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import time
 
-
-
-
+#genarate a soup object by BeautifulSoup
 def get_page(url):
     response = requests.get(url)
-
 
     if not response.ok:
         print('Server responded:', response.status_code)
@@ -17,10 +14,11 @@ def get_page(url):
         soup = BeautifulSoup(response.text, 'lxml')
     return soup
 
+#from soup object find script tag with a specific type
 def get_detail_data(soup):
     try:
         title = soup.find('script', {'type': 'application/ld+json'})
-            #.join(str(soup.find('script')).split("\n"))
+
     except:
         title = ''
 
@@ -31,13 +29,12 @@ def get_detail_data(soup):
 
     f = open("review.csv", "a", encoding='utf-8')
 
-
     json_obj = json.loads(title.text)
 
+    #Read Data from Daraz webpage. To understand these lines please go to Daraz.com.bd site and open background code.
+    #You need a little knowledge about json Data format
     review_access = json_obj['review']
     for review_data in review_access:
-
-
         try:
             review_body = review_data['reviewBody']
         except:
@@ -52,8 +49,7 @@ def get_detail_data(soup):
         except:
             rating_value = ''
 
-
-
+        #append to csv file new Review Data
         f.write(review_body+","+rating_value+"\n")
 
 
@@ -62,10 +58,12 @@ def get_detail_data(soup):
 
 
 def main():
+    #creating a csv file for save Review Data
     f = open("review.csv", "w+", encoding='utf-8')
     headers = "Review Body, Rating Value"
     f.write(headers + "\n")
 
+    #read text file containing Daraz category page link
     with open('link.txt', 'r') as g:
         for line in g:
             try:
